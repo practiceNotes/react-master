@@ -56,3 +56,6 @@
     editListDOM.push(React.createElement(Item, {id, key}));
 
 ```
+
+
+// 04-07通过实例代码掌握生命周期的知识点上

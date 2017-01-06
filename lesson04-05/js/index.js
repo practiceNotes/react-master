@@ -1,5 +1,5 @@
 /**
- * 04-01组件生命周期的原理
+ * 04-05卸载阶段与生命周期总结
  */
 
 
@@ -34,7 +34,7 @@
  *              componentDidMount   这个方法也只调用1次
  *                  dom     操作DOM
  *                  other framework
- *                  ajax server data
+ *                  ajax server data 
  *
  *      update   调用N次
  *          will
@@ -43,7 +43,7 @@
  *
  *          props  做为更改
  *
- *          render(){
+ *          render(info){
  *              return <Item group={info} />
  *              render(123);
  *              render(123);

@@ -1,5 +1,5 @@
 /**
- * 04-01组件生命周期的原理
+ * 04-05卸载阶段与生命周期总结
  */
 
 
@@ -34,7 +34,7 @@
  *              componentDidMount   这个方法也只调用1次
  *                  dom     操作DOM
  *                  other framework
- *                  ajax server data
+ *                  ajax server data 
  *
  *      update   调用N次
  *          will
@@ -43,7 +43,7 @@
  *
  *          props  做为更改
  *
- *          render(){
+ *          render(info){
  *              return <Item group={info} />
  *              render(123);
  *              render(123);
@@ -90,7 +90,8 @@ const Item = React.createClass({
 
         // 做一个循环的,颜色的切换
 
-        setInterval(() => {
+
+        this.state.loopNum = setInterval(() => {
            if(isYellow){
                dom.style.background = "red";
                isYellow = false;
@@ -101,21 +102,78 @@ const Item = React.createClass({
         }, 500);
     },
 
+    // 更新阶段的方法
 
+    componentWillReceiveProps(nextProps){
+        console.log("component will receive props");
+
+    },
+
+    shouldComponentUpdate(nextProps, nextState){
+
+        // 判断它是不是真的更新了
+        console.log("should component update");
+
+        return false;  // 如果是真值就执行这里 should component update
+    },
+
+    // 更改界面
+    componentWillUpdate(nexProps, nextState){
+        console.log("componet will update");
+
+    },
+
+    componentDidUpdate(oldProps, oldState){
+        console.log("componet did updaate");
+    },
+
+    update(){
+
+        this.setState({
+            name:"cheng"
+        });
+
+       // 强制刷新
+       //  this.forceUpdate();
+    },
     // 数据渲染
     render(){
         console.log("render");
-        return <div>{this.props.group + this.state.name}</div>
+        return <div>
+            {this.props.group + this.state.name}
+            <input onClick={this.update} type="button" value="update"/>
+        </div>
+    },
+
+    // 清除 setInterval()
+    componentWillUnmount(){
+        console.log("component will unmount");
+        clearInterval(this.state.loopNum);
     }
 });
 
-ReactDOM.render(
-    <div>
-        <Item />
-        <Item />
-        <Item />
-        <Item />
-    </div>,
+function reader(bool){
+    ReactDOM.render(
+        <div>
+            <Item />
+            {bool ? <Item/> : ""}
+        </div>,
+        document.getElementById("container")
+    );
 
-    document.getElementById("container")
-);
+}
+
+/*const List = React.createClass({
+    render(){
+        return  <div>
+            <Item />
+        </div>
+    }
+})*/
+
+/*reader();
+reader();*/
+reader(true);
+
+document.getElementById("clear").onclick = reader;
+

@@ -1,5 +1,5 @@
 /**
- * 04-01组件生命周期的原理
+ * 04-07通过实例代码掌握生命周期的知识点上
  */
 
 
@@ -34,7 +34,7 @@
  *              componentDidMount   这个方法也只调用1次
  *                  dom     操作DOM
  *                  other framework
- *                  ajax server data
+ *                  ajax server data 
  *
  *      update   调用N次
  *          will
@@ -43,7 +43,7 @@
  *
  *          props  做为更改
  *
- *          render(){
+ *          render(info){
  *              return <Item group={info} />
  *              render(123);
  *              render(123);
@@ -61,7 +61,7 @@ const Item = React.createClass({
     getDefaultProps(){
         console.log("get default props");
         return {
-            group:123
+            group:"bi value"
         }
     },
 
@@ -69,28 +69,25 @@ const Item = React.createClass({
     getInitialState(){
         console.log("get init initialState");
         return {
-            name:"chengjin"
+            name:this.props.value
         }
     },
 
-    // 以下是加载过程
+    // 加载之前
     componentWillMount(){
-        console.log("component will mount");
-        this.state.name = "呈琛";
+       //
     },
 
     componentDidMount(){
-        console.log("component did mount");
         // 查找DOM节点当前
         const dom = ReactDOM.findDOMNode(this);
 
         let isYellow = false;
 
-       //dom.style.background = "yellow";
+        const dom = ReactDOM.findDOMNode(this);
 
         // 做一个循环的,颜色的切换
-
-        setInterval(() => {
+        this.state.loopNum = setInterval(() => {
            if(isYellow){
                dom.style.background = "red";
                isYellow = false;
@@ -101,21 +98,72 @@ const Item = React.createClass({
         }, 500);
     },
 
+    // 更新阶段的方法
+    componentWillReceiveProps(nextProps){
+       this.state.value = nextProps.value;
+    },
 
+    // 判断它是不是真的更新了
+    shouldComponentUpdate(nextProps, nextState){
+
+        return false;  // 如果是真值就执行这里 should component update
+    },
+
+    // 更改阶段
+    componentWillUpdate(nexProps, nextState){
+       /*let dom = ReactDOM.findDOMNode(); // 得到这个dom
+
+       let oldStyle = dom.style.border;
+       dom.style.border  = "2px solid red";
+
+       setTimeout(() => {
+            dom.style.border = oldStyle;
+
+       }, 2000);*/
+    },
+
+    componentDidUpdate(oldProps, oldState){
+        let dom = ReactDOM.findDOMNode(); // 得到这个dom
+
+        let oldStyle = dom.style.border;
+        dom.style.border  = "2px solid red";
+
+        setTimeout(() => {
+            dom.style.border = oldStyle;
+
+        }, 2000);  // 5.47
+    },
+
+    update(){
+
+        this.setState({
+            name:"cheng"
+        });
+
+       // 强制刷新
+       //  this.forceUpdate();
+    },
     // 数据渲染
     render(){
         console.log("render");
-        return <div>{this.props.group + this.state.name}</div>
+        return <div>
+            {this.props.group + this.state.name}
+            <input onClick={this.update} type="button" value="update"/>
+        </div>
+    },
+
+    // 清除 setInterval()
+    componentWillUnmount(){
+        console.log("component will unmount");
+        clearInterval(this.state.loopNum);
     }
 });
 
 ReactDOM.render(
     <div>
         <Item />
-        <Item />
-        <Item />
-        <Item />
     </div>,
-
-    document.getElementById("container")
+    document.querySelector("#container")
 );
+
+// 08:11
