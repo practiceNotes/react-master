@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .box{width:200px; height:300px; background:#ccc;}
+    </style>
+</head>
+<body>
+
+<div id="divBox"></div>
+
+<script src="../../dist/react.js"></script>
+<script src="../../dist/react-dom.js"></script>
+<script src="../../dist/browser.min.js"></script>
+<script type="text/babel">
+    class Comp extends React.Component{
+        // 即将销毁
+        componentWillUnmount(){
+            console.log("1、即将销毁 component Will Mumount");
+        }
+
+        render(){
+            return <span>11111</span>
+        }
+    }
+
+    window.onload = () => {
+        const oDiv = document.getElementById("divBox");
+        let i = 0;
+
+
+        document.onclick = () => {
+            i++;
+            if(i%2){
+                ReactDOM.render(
+                    <Comp/>,
+                    oDiv
+                );
+            }else{
+                ReactDOM.render(
+                    <div></div>,
+                    oDiv
+                );
+            }
+        };
+    }
+
+
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,69 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        img{margin:50px; }
+    </style>
+</head>
+<body>
+
+<cc-view></cc-view>
+
+<script src="../../dist/react.js"></script>
+<script src="../../dist/react-dom.js"></script>
+<script src="../../dist/browser.min.js"></script>
+<script src="../../dist/jquery.js"></script>
+<script type="text/babel">
+
+    // 延时加载
+    class LazyLoad extends React.Component{
+        constructor(...args){
+            super(...args);
+            //alert(this.props.imgs);
+            this.aImgPath = this.props.imgs.split(",");
+
+            const _this = this;
+
+            window.onscroll = () => {
+                let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+
+                // 获取到子元素
+                _this.refs["div1"].children;
+            }
+
+
+        };
+
+        render(){
+            /* alert(this.aImgPath);*/
+            let arr = [];
+            for(let i = 0; i < this.aImgPath.length; i++){
+                arr.push(<div key={i}><img data-src={this.aImgPath[i]} alt="logo" /></div>);
+            }
+            return <div ref="div1">{arr}</div>;
+
+        }
+    }
+
+    $(() => {
+        ReactDOM.render(
+                <LazyLoad imgs="img/forumaa.png, img/forumbb.png, img/forumcc.png, img/forumdd.png"/>,
+            $("cc-view")[0]
+
+        );
+    });
+
+    // 滚动
+    /* window.onscroll = () => {
+
+     }*/
+
+
+
+</script>
+
+</body>
+</html>

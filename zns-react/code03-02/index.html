@@ -1,0 +1,59 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .box{width:200px; height:300px; background:#ccc;}
+    </style>
+</head>
+<body>
+
+<div id="main"></div>
+
+<script src="../../dist/react.js"></script>
+<script src="../../dist/react-dom.js"></script>
+<script src="../../dist/browser.min.js"></script>
+<script src="../../dist/jquery.js"></script>
+<script type="text/babel">
+
+    class Title extends React.Component{
+        constructor(...args){
+            super(...args);
+            this.state = {color:"black"};
+        }
+
+        fn(){
+
+            // 对属性的修改
+            this.setState({
+                color:"red"
+            });
+
+        }
+
+
+
+        render(){
+            return <div>
+                <input type="button" value="按钮" onClick={this.fn.bind(this)}/>
+                <span  style={{color:this.state.color}}>qqqqqaaa</span>
+            </div>
+        }
+    }
+
+    $(() => {
+        ReactDOM.render(
+            <Title></Title>,
+            $("#main")[0]
+        );
+    })
+
+
+
+
+</script>
+
+</body>
+</html>

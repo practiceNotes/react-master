@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .box{width:200px; height:300px; background:#ccc;}
+    </style>
+</head>
+<body>
+
+<div id="divBox"></div>
+
+<script src="../../dist/react.js"></script>
+<script src="../../dist/react-dom.js"></script>
+<script src="../../dist/browser.min.js"></script>
+<script type="text/babel">
+
+
+    class Comp extends React.Component{
+        // 创建之前，也叫即将创建
+        componentWillMount(){
+            console.log("01-刚刚创建完 component Will Mount");
+        }
+
+        // 创建之后
+        componentDidMount(){
+            console.log("02-创建之后 component Dit Mount");
+        }
+
+        render(){
+            return <span>1111</span>
+        }
+    }
+
+    window.onload = () => {
+        const oDiv = document.getElementById("divBox");
+
+        ReactDOM.render(
+            <Comp></Comp>,
+            oDiv
+        );
+
+    }
+
+
+</script>
+
+</body>
+</html>

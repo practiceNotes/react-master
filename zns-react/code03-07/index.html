@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        img{margin:50px; }
+    </style>
+</head>
+<body>
+
+<cheng-view></cheng-view>
+
+<script src="../../dist/react.js"></script>
+<script src="../../dist/react-dom.js"></script>
+<script src="../../dist/browser.min.js"></script>
+<script src="../../dist/jquery.js"></script>
+<script type="text/babel">
+    // 控制表单的 value
+    class UserLoginForm extends React.Component{
+
+        render(){
+            return <form action="http://www.baidu.com" method="get">
+                <p>用户名：<input type="text" name="username" defaultValue={this.props.a}/></p>
+                <p><label>是否接收邮件：<input type="checkbox" defautltChecked="true"/></label> </p>
+                <p><input type="submit" value="提交"/></p>
+            </form>;
+        }
+    }
+
+    $(() => {
+        ReactDOM.render(
+                <UserLoginForm a="cheng" />,
+            $("cheng-view")[0]
+        )
+    });
+
+</script>
+
+</body>
+</html>

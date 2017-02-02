@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div id="oDiv"></div>
+
+<script src="../../dist/react.js"></script>
+<script src="../../dist/react-dom.js"></script>
+<script src="../../dist/browser.min.js"></script>
+<script type="text/babel">
+
+    // React事件
+    class Comp extends React.Component{
+        constructor(...args){
+            super(...args);  // 超类、父类
+            this.state = {value:""}
+        }
+
+        fn(){
+            alert("abc");
+        }
+
+        render(){
+            return <div>
+                <input type="text" onChange={this.fn.bind(this)}/>
+                <span></span>
+            </div>
+        }
+    }
+
+
+    window.onload = function(){
+        var oDivs = document.querySelector("#oDiv");
+        ReactDOM.render(
+            <Comp></Comp>,
+            oDivs
+        );
+    };
+
+</script>
+
+</body>
+</html>

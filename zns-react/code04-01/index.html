@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        img{margin:50px; }
+    </style>
+</head>
+<body>
+
+<cheng-view></cheng-view>
+
+<script src="../../dist/react.js"></script>
+<script src="../../dist/react-dom.js"></script>
+<script src="../../dist/browser.min.js"></script>
+<script src="../../dist/jquery.js"></script>
+<script type="text/babel">
+    // 父子级通信
+   class Child extends React.Component{
+       constructor(...args){
+           super(...args);
+           this.num =555;
+       }
+
+       render(){
+           alert(this.props.cb);
+           this.props.cb(this.num);
+           return <div>{this.props.a}</div>;
+       }
+   }
+
+   class Parent extends React.Component{
+        constructor(...args){
+            super(...args);
+            this.a = 12;
+        }
+
+        fn(num){
+            alert(num);
+        }
+
+        render(){
+            return <div>
+                <div>aaaa</div>
+                <Child  cb={this.fn.bind(this)}/>
+                <div>bbb</div>
+            </div>;
+        }
+   }
+
+   $(() => {
+        ReactDOM.render(
+            <Parent />,
+            $("cheng-view")[0]
+        );
+   });
+
+</script>
+
+</body>
+</html>

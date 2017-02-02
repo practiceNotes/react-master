@@ -1,0 +1,67 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .box{width:200px; height:300px; background:#ccc; position:absolute;}
+    </style>
+</head>
+<body>
+
+    <cheng-view></cheng-view>
+
+<script src="../../dist/react.js"></script>
+<script src="../../dist/react-dom.js"></script>
+<script src="../../dist/browser.min.js"></script>
+<script src="../../dist/jquery.js"></script>
+<script type="text/babel">
+    class Drag extends React.Component{
+        constructor(...args){
+            super(...args);
+
+            this.state = {x:0, y:0,}
+        }
+
+        fn(ev){
+            // alert(ev.pageY);  // 当前的位置
+            let disX = ev. pageX - this.state.x;
+            let disY = ev. pageY - this.state.y;
+
+            let _this = this;
+
+           document.onmousemove = (ev) => {
+               _this.setState({
+                    x: ev.pageX-disX,
+                    y: ev.pageY-disY
+                });
+           };
+
+
+           document.onmuseup =  () => {
+                document.onmusemove = null;
+                document.onmuseup = null;
+           }
+
+        }
+
+        render(){
+            return <div style={{left:this.state.x+"px", top:this.state.y+"px"}} className="box" onMouseDown={this.fn.bind(this)}>11111</div>;
+        }
+    }
+
+    $(() => {
+        ReactDOM.render(
+            <Drag></Drag>,
+            $("cheng-view")[0]
+        );
+    });
+
+
+
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        img{margin:50px; }
+    </style>
+</head>
+<body>
+
+<cheng-view></cheng-view>
+
+<script src="../../dist/react.js"></script>
+<script src="../../dist/react-dom.js"></script>
+<script src="../../dist/browser.min.js"></script>
+<script src="../../dist/jquery.js"></script>
+<script type="text/babel">
+    // 事件冒泡
+    class TmpComp extends React.Component{
+        constructor(...args){
+            super(...args);
+        };
+
+        fn1(){
+            alert("父级");
+        }
+
+        fn2(ev){
+            alert("子级");
+            /*ev.cancelbubble = true; // 阻止事件冒泡     在react里是没用的
+            ev.stopPropergation();    // 源生阻止事件冒泡，在react里是没用的*/
+
+           /* ev.nativeEvent.cancelBubble(); // 去掉事件冒泡， 还是没有用的*/
+
+           ev.nativeEvent.stopImmediatePropagation(); /*//  去掉事件冒泡， 还是没有用的,可能是单词错了*/
+
+        }
+
+
+        render(){
+            return <div onClick={this.fn1.bind(this)}>
+                <div onClick={this.fn2.bind(this)}>aaaa</div>
+            </div>
+        }
+    }
+
+    $(() => {
+        ReactDOM.render(
+                <TmpComp/>,
+            $("cheng-view")[0]
+        )
+    });
+
+</script>
+
+</body>
+</html>

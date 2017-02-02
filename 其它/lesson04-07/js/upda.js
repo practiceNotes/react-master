@@ -53,6 +53,44 @@
  *
  */
 
+
+// 数据库  satart 参考node.js 入门实战
+    /**
+     *  http://github.com/liangzeng/blog.lesson/blob/master/database.js
+     */
+
+/*let fs = require("fs");
+const filepath = __dirname+"/data.json";
+let list;
+try{
+    list = JSON.parse(fs.readfileSync(filepath));
+}catch(e){
+    list = [];
+}*/
+
+
+let list;
+const database = {
+    add(article){
+        list.push(article);
+        return list.length -1;
+    },
+    del(index){
+       list[index] = null;
+    },
+    update(index, newArticle){
+        list.splice(index, 1, newArticle);
+        //this.store();
+    },
+    get list(){
+        //return list;
+    }
+
+}
+
+// 数据库  end
+
+
 const Item = React.createClass({
     //  displayName 测试
     displayName:"Item",
@@ -61,26 +99,32 @@ const Item = React.createClass({
     getDefaultProps(){
         console.log("get default props");
         return {
-            group:"bi value"
+            value:"no value"
         }
     },
 
     // getInitialState 获取状态数据
+    /**
+     *  状态初始化value
+     * @returns {{name}}
+     */
     getInitialState(){
-        console.log("get init initialState");
+
         return {
-            name:this.props.value
+            name:this.props.value,
+            currentHistory:"",
+            history:[]  // 必是一个数组
         }
     },
 
-    // 加载之前
+    // 加载之前,要做的一些事情
     componentWillMount(){
        //
+        this.state.dbkey = database.add({value:this.state.value});
     },
 
     componentDidMount(){
         // 查找DOM节点当前
-        const dom = ReactDOM.findDOMNode(this);
 
         let isYellow = false;
 
@@ -98,57 +142,90 @@ const Item = React.createClass({
         }, 500);
     },
 
-    // 更新阶段的方法
+    // 更新阶段的，变化的方法
     componentWillReceiveProps(nextProps){
        this.state.value = nextProps.value;
+
     },
 
     // 判断它是不是真的更新了
+    /**
+     *
+     * @param nextProps
+     * @param nextState
+     * @returns {boolean}
+     *
+     * 如果返回的是真值的话，就执行下面的方法
+     */
     shouldComponentUpdate(nextProps, nextState){
 
-        return false;  // 如果是真值就执行这里 should component update
+        return true;  // 如果是真值就执行这里 should component update
     },
 
     // 更改阶段
+    /**
+     * @param nexProps
+     * @param nextState
+     * 更新数据库
+     */
     componentWillUpdate(nexProps, nextState){
-       /*let dom = ReactDOM.findDOMNode(); // 得到这个dom
-
-       let oldStyle = dom.style.border;
-       dom.style.border  = "2px solid red";
-
-       setTimeout(() => {
-            dom.style.border = oldStyle;
-
-       }, 2000);*/
+        // update database
+        let dbkey = this.state.dbkey;
+        database.update(dbkey,{value:this.state.value});
     },
 
     componentDidUpdate(oldProps, oldState){
-        let dom = ReactDOM.findDOMNode(); // 得到这个dom
+        let dom = ReactDOM.findDOMNode(this); // 得到这个dom
 
         let oldStyle = dom.style.border;
         dom.style.border  = "2px solid red";
 
+        // 2秒钟之后，恢复到原始状态
         setTimeout(() => {
             dom.style.border = oldStyle;
-
         }, 2000);  // 5.47
     },
 
     update(){
-
-        this.setState({
-            name:"cheng"
-        });
-
+        this.setState({name:"cheng"});
        // 强制刷新
        //  this.forceUpdate();
     },
+
+    changeValue(event){
+        this.setState({
+            value:event.target.value
+        });
+    },
+
+    // 保存
+    save(){
+
+    },
+
+    // 向前
+    prev(){
+
+    },
+    // 向后
+    next(){
+
+    },
+
+
+
     // 数据渲染
     render(){
         console.log("render");
         return <div>
-            {this.props.group + this.state.name}
-            <input onClick={this.update} type="button" value="update"/>
+            <div>
+                <input type="button" onClick={this.prev} value="prev"/>
+                <input type="button" onClick={this.next} value="next"/>
+                <span>{this.state.currentHistory}</span>
+            </div>
+
+            <input type="text" value={this.state.value} onChange={this.changeValue}/>
+            <input type="button" value="seve" onClick={this.save}/>
         </div>
     },
 
@@ -158,12 +235,9 @@ const Item = React.createClass({
         clearInterval(this.state.loopNum);
     }
 });
-
 ReactDOM.render(
     <div>
         <Item />
     </div>,
-    document.querySelector("#container")
+    document.getElementById("container")
 );
-
-// 08:11

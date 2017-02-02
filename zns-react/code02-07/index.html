@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .box{width:200px; height:300px; background:#ccc;}
+    </style>
+</head>
+<body>
+
+<div id="main"></div>
+
+<script src="../../dist/react.js"></script>
+<script src="../../dist/react-dom.js"></script>
+<script src="../../dist/browser.min.js"></script>
+<script type="text/babel">
+   class Item extends React.Component{
+        constructor(...args){
+            super(...args);
+        };
+
+        render(){
+            return <li>{this.props.value}</li>
+        }
+
+   }
+
+
+   class List extends React.Component{
+       constructor(...args){
+           super(...args);
+           //this.arr = [12, 8, 5, 9];
+           this.state = {arr:[12, 8, 5, 9]}
+       }
+
+       fn(){
+
+           this.setState({
+                arr:this.state.arr.concat([Math.random()])
+           });
+
+       };
+
+       render(){
+
+           let result = [];
+           let arr = this.state.arr;
+
+           for(let i = 0; i < arr.length; i++){
+               result.push( <Item  value={arr[i]} key={i}/>);
+           }
+
+           return <ul>
+               <input type="button" value="按钮" onClick={this.fn.bind(this)}/>
+               {result}
+           </ul>
+       }
+   }
+
+   window.onload = () => {
+       const  oDiv = document.getElementById("main");
+
+       ReactDOM.render(
+           <List />,
+           oDiv
+       );
+   }
+
+</script>
+
+</body>
+</html>
