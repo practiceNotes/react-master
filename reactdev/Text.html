@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+
+
+    /* API URL, you need to supply your API key */
+    var URL = 'https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=your_api_key&format=json&nojsoncallback=1&tags=penguins';
+
+    function fetchDemo() {
+        fetch(URL).then(function(response) {
+            return response.json();
+        }).then(function(json) {
+            insertPhotos(json);
+        });
+    }
+
+    fetchDemo();
+</script>
+</body>
+</html>

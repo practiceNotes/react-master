@@ -161,18 +161,84 @@ React
 
 
     父子级通信
+        1.父级-->给子级东西
+        2.子级-->给父级东西
     ---------------------------------------   
     
     
     webPack
-    1.babel 实时编译，慢
-    2.测试麻烦
-    3.自己搭建服务器
-    4.热更新
+        1.babel 实时编译，慢
+        2.测试麻烦
+        3.自己搭建服务器
+        4.热更新
     ---------------------------------------
     
     
     webPack
+        淘宝源 npm install -g gulp --registry=http://registry.npm.taobao.org
+        中国源 npm install -g gulp --registry=http://registry.cnpmjs.org
+        官方源 npm install -g gulp --registry=http://www.npmjs.org/
+
+        -D 是把下面的插件依赖库版本加班到 package.json 里面去
+
+        1.安装配置webpack
+
+            01. 安装 webpack #webpack的cli环境
+                npm install -g webpack --registry=http://registry.npm.taobao.org
+
+            02. 安装 webpack-dev-server #webpack自带的服务器
+                npm install -g webpack-dev-server --registry=http://registry.npm.taobao.org
+
+        2.各种依赖库
+            #babel相关库
+
+            01. 安装 babel-core d #后台编译babel工具
+               npm install babel-core -D --registry=http://registry.npm.taobao.org
+
+            02. 安装 babel-preset-es2015 -D #babel对ES2015的的预设
+                npm install babel-preset-es2015 -D --registry=http://registry.npm.taobao.org
+
+            03. 安装 babel-loader
+                npm install babel-loader -D
+
+        3.#webpack本身
+            #webpack 本地的依赖库
+                npm install webpack -D
+
+            #webpack服务器的本地依赖
+                npm install webpack-dev-server -D
+
+            #babel-react预设
+                npm install babel-preset-react -D
+
+        4.#react相关库
+
+            #react 本身
+                npm install react -D
+            #react-dom 本身
+                npm install react-dom -D
+
+            #热更新
+                npm install react-hot-loader -D
+
+
+        5.#打包样式
+            npm install style-loader -D
+            npm install css-loader -D
+
+
+
+        6.webpack的配置文件
+            webpack.config.js       #webpack的配置文件
+            .babelrc                #babel预设文件
+
+
+
+        7.启动webpack服务器
+
+
+
+
     
     ---------------------------------------
     

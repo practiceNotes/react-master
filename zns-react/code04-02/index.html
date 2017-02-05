@@ -16,28 +16,42 @@
 <script src="../../dist/browser.min.js"></script>
 <script src="../../dist/jquery.js"></script>
 <script type="text/babel">
-    // 父子级通信
+    /**
+     * 回调函数，不是很推荐
+     *
+     * 应该用别的方法
+     */
+    // 子级
     class Child extends React.Component{
         constructor(...args){
             super(...args);
+
+            this.num = 55;  // 把这个发给父级
         }
 
         render(){
+            // 在这里使用回调函数
+            this.props.cb(this.num);
+            //alert(this.props.cb);
             return <div>{this.props.a}</div>;
         }
     }
 
-    // 父级给子级加东西
+    // 父级给子级传东西
     class Parent extends React.Component{
         constructor(...args){
             super(...args);
             this.a = 18;
         };
 
+        fn(num){
+            alert(num);
+        }
+
         render(){
            return <div>
                <div>aaaaa</div>
-               <Child a={this.a} />
+               <Child cb={this.fn.bind(this)} />
                <div>bbbb</div>
            </div>;
         }
